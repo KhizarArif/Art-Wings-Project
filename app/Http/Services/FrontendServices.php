@@ -20,9 +20,9 @@ class FrontendServices
 {
     public function index()
     {
-        $products = Product::with('productImages')->with('subCategories')->get();
+        $subCategories = SubCategory::with('subCategoryImages')->where([['status', "active"], ["showHome" , "yes"]])->get();
         $reviews = Review::all();
-        return view('frontend.welcome', compact('products', 'reviews'));
+        return view('frontend.welcome', compact('subCategories', 'reviews'));
     }
     public function shoppingCarts()
     {
