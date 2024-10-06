@@ -50,5 +50,10 @@ class FrontController extends Controller
     public function subCategoryProducts($subcategoryId){
         return $this->frontendServices->subCategoryProducts($subcategoryId);
     }
+    
+    public function subProducts($subcategorySlug=null){
+        return $this->frontendServices->subProducts($subcategorySlug);
+    }
+
 
 }

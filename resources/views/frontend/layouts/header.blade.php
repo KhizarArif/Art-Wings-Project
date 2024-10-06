@@ -29,6 +29,12 @@
     <!-- MDB -->
     <link rel="stylesheet" href="css/mdb.min.css" />
 
+    <!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Bootstrap JavaScript -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+
+
     <!-- Styles -->
     <style>
         /* Color of the links BEFORE scroll */
@@ -83,7 +89,7 @@
     <header>
 
         <!-- Navbar -->
-        <nav id="main-navbar" class="navbar navbar-expand-md fixed-top navbar-before-scroll shadow-0">
+        <nav id="main-navbar" class="navbar navbar-expand-md fixed-top navbar-before-scroll shadow-0" style="height:10vh;">
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Toggle button -->
@@ -147,6 +153,24 @@
             <!-- Container wrapper -->
         </nav>
         <!-- Navbar -->
+
+        <div class="row d-flex justify-content-center align-items-center bg-white">
+            <?php
+
+            use function App\Helpers\getSubCategories;
+
+            $subCategories = getSubCategories();
+            ?>
+            @if ($subCategories->isNotEmpty())
+            @foreach ($subCategories as $getSubCategory)
+            <div class="navbar_subCategory">
+                <a href="javascript:void(0)" class="navbar_subCategory_link">
+                    <p class="navbar_subCategory_text">{{$getSubCategory->name}}</p>
+                </a>
+            </div>
+            @endforeach
+            @endif
+        </div>
 
     </header>
     <!--Main Navigation-->

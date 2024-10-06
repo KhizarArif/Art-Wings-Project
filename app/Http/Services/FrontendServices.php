@@ -11,6 +11,7 @@ use App\Models\Product;
 use App\Models\Review;
 use App\Models\ShippingCharge;
 use App\Models\SubCategory;
+use App\Models\SubCategoryImage;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -20,10 +21,30 @@ class FrontendServices
 {
     public function index()
     {
-        $subCategories = SubCategory::with('subCategoryImages')->where([['status', "active"], ["showHome" , "yes"]])->get();
+        $subCatId = [];
+        $subCategories = SubCategory::where([['status', "active"], ['showHome', "yes"]])->with('subCategoryImages')->get();    
         $reviews = Review::all();
         return view('frontend.welcome', compact('subCategories', 'reviews'));
     }
+
+    public function subProducts($subcategorySlug){
+        // $products = Product
+        $subcategorySelected = '';
+        $products = collect();
+        if(!empty($subcategorySlug)){
+            $productsQuery = Product::with('productImages')->where('status', "active");
+            $subcategory = SubCategory::where('slug', $subcategorySlug)->first();
+            if($subcategory){
+                $productsQuery->where('sub_category_id', $subcategory->id);
+                $subcategorySelected = $subcategory->id;
+            }
+
+            $products = $productsQuery->paginate(6);
+        }
+
+        return view('frontend.allProducts', compact('products', 'subcategorySelected'));
+    }
+
     public function shoppingCarts()
     {
         $contentCart = Cart::content();

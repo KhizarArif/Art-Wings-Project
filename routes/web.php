@@ -37,6 +37,7 @@ Route::get('/', function () {
 // ============================ Front Routes ===============================
 Route::controller(FrontController::class)->group(function () {
     Route::get('/', 'index')->name('home');
+    Route::get('/new_arrivals/{subcategorySlug?}', 'subProducts')->name('frontend.subProducts');
 });
 
 
