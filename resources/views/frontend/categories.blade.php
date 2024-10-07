@@ -1,45 +1,77 @@
 <section>
-    {{-- <div class="container">
+    <div class="container">
         <h1 class="new_arrival_title"> CATEGORIES </h1>
 
-        <div class="tab-class text-center">
-            @if ($subCategories->isNotEmpty())
-                <ul class="nav nav-pills d-inline-flex justify-content-center mb-5 " data-wow-delay="0.1s">
-                    <li class="nav-item p-2">
-                        <a class="d-flex mx-2 py-2 border border-primary bg-light rounded-pill active"
-                            data-bs-toggle="pill" href="#tab-1">
-                            <span class="text-dark" style="width: 150px;"> All Events</span>
-                        </a>
-                    </li>
-                    @foreach ($subCategories as $index => $subCategory)
-                        <li class="nav-item p-2">
-                            <a class="d-flex mx-2 py-2 border border-primary bg-light rounded-pill"
-                                data-bs-toggle="pill" href="#tab-{{ $index + 2 }}">
-                                <span class="text-dark" style="width: 150px;"> {{ $subCategory->name }} </span>
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @endif
+        <div class="container">
+            <div class="tabs-to-dropdown">
+                <div class="nav d-flex align-items-center justify-content-center">
+                    <ul class="nav nav-pills d-none d-md-flex text-center" id="pills-tab" role="tablist">
+                        @if ($subCategories != null)
+                            @foreach ($subCategories as $subcategory)
+                                <li class="nav-item " role="presentation">
+                                    <a class="nav-link active" id="pills-{{ $subcategory->id }}-tab" data-toggle="pill"
+                                        href="#pills-{{ $subcategory->id }}" role="tab"
+                                        aria-controls="pills-{{ $subcategory->id }}"
+                                        aria-selected="true">
+                                        <h6 class="text-black"> {{ $subcategory->name }} </h6>
+                                    </a>
+                                </li>
+                            @endforeach
+                        @endif
+                    </ul>
 
-            <div class="tab-content">
-                <div id="tab-1" class="tab-pane fade show p-0 active">
-                    <div class="row g-4">
-                    </div>
                 </div>
 
-                @foreach ($subCategories as $index => $subCategory)
-                    <div id="tab-{{ $index + 2 }}" class="tab-pane fade show p-0">
-                        <div class="row g-4">
+                <div class="tab-content" id="pills-tabContent">
+                    @foreach ($subCategories as $subcategory)
+                        <div class="tab-pane fade show active" id="pills-{{ $subcategory->id }}" role="tabpanel"
+                            aria-labelledby="pills-{{ $subcategory->id }}-tab">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    @foreach ($subcategory->subCategoryImages as $subImage)
+                                        <div
+                                            class="col-md-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
+                                            <div class="card border border-2">
+                                                <div class="img-container position-relative">
+                                                    <a href="javascript::void(0)">
+                                                        <img src="{{ asset('uploads/subCategory/large/' . $subImage->image) }}"
+                                                            class="card-img-top shop-item-image" alt="">
+                                                    </a>
+                                                    <div class="overlay">
+                                                        <div class="icons">
+                                                            <a
+                                                                href="{{ route('frontend.subProducts', $subcategory->slug) }}">
+                                                                <i class="fa fa-eye" aria-hidden="true"
+                                                                    data-toggle="tooltip" data-placement="top"
+                                                                    title="view details"></i>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="card-body d-flex flex-column">
+                                                    <h5 class="card-title shop-item-title">{{ $subcategory->name }}</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
+                    @endforeach
+                </div>
             </div>
+
+
+            <div id="tab-content-placeholder" class="mt-4"></div>
+
         </div>
-    </div> --}}
+
+
+    </div>
 
 
 
- 
+
 
 </section>
