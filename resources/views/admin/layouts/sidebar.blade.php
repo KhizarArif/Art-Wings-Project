@@ -39,6 +39,13 @@
                  </li>
 
                  <li>
+                     <a href="{{ route('featured_products.index') }}" class=" waves-effect">
+                        <i class="ri-product-hunt-fill"></i>
+                         <span> Featured Products </span>
+                     </a>
+                 </li>
+
+                 <li>
                      <a href="{{ route('orders.index') }}" class=" waves-effect">
                         <i class="ri-shopping-bag-fill"></i>
                          <span> Orders </span>

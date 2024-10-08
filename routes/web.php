@@ -92,6 +92,15 @@ Route::group(["prefix" => "dashboard"], function () {
             // Update Product Controller Image
             Route::post('product_image/update', 'updateProductImage')->name('products.updateImage');
             Route::delete('product_image', 'deleteProductImage')->name('products.deleteImage');
+
+            // Featured Products Details 
+            Route::prefix('featured_products')->group(function () {
+                Route::get('', 'featuredProduct')->name('featured_products.index');
+                Route::get('create', 'createFeaturedProduct')->name('featured_products.create');
+                Route::get('edit/{id}', 'editFeaturedProduct')->name('featured_products.edit');
+                Route::post('store', 'storeFeaturedProduct')->name('featured_products.store');
+                Route::delete('delete/{id}', 'destroyFeaturedProduct')->name('featured_products.delete');
+            });
         });
 
         // Order Details 

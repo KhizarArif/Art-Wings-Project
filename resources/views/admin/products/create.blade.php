@@ -11,25 +11,21 @@
 
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label"> Title </label>
-                            <input type="text" class="form-control" name="title" id="title" placeholder=" Title "
-                                value="{{ isset($editProduct->title) ? $editProduct->title : null }}" required>
+                            <input type="text" class="form-control" name="title" id="title" placeholder=" Title "  required>
                         </div>
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label"> Slug </label>
-                            <input type="text" class="form-control" name="slug" id="slug" placeholder=" Slug "
-                                value="{{ isset($editProduct->slug) ? $editProduct->slug : null }}" readonly>
+                            <input type="text" class="form-control" name="slug" id="slug" placeholder=" Slug " readonly>
                         </div>
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label"> Short Description. </label>
-                            <input type="text" class="form-control" id="validationCustom01" name="short_description"
-                                value="{{ isset($editProduct->short_description) ? $editProduct->short_description : null }}"
+                            <input type="text" class="form-control" id="validationCustom01" name="short_description" 
                                 placeholder=" Short Description... " required>
                         </div>
                         <div class="mb-3">
                             <label for="validationCustom01" class="form-label"> Detail Description. </label>
                             <textarea class="form-control" placeholder=" Detail Description... " name="detail_description" id="validationCustom01"
-                                rows="5" required>
-                                {{ isset($editProduct->detail_description) ? $editProduct->detail_description : null }} 
+                                rows="5" required> 
                             </textarea>
                         </div>
                         <div class="row">

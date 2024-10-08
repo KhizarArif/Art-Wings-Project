@@ -3,6 +3,7 @@
 namespace App\Http\Services;
 
 use App\Models\Category;
+use App\Models\FeaturedProduct;
 use App\Models\Product;
 use App\Models\ProductImage;
 use App\Models\ProductSize;
@@ -25,11 +26,11 @@ class ProductServices
     public function create()
     {
         $subCategories = SubCategory::orderBy("id", "desc")->where('status', "active")->get();
-        return view('admin.products.create', compact( 'subCategories'));
+        return view('admin.products.create', compact('subCategories'));
     }
 
     public function store($request)
-    { 
+    {
         $validator = Validator::make($request->all(), [
             'title' => 'required',
             'short_description' => 'required',
@@ -56,8 +57,8 @@ class ProductServices
         }
 
         if ($validator->passes()) {
-            
-            $product = $request->id ? Product::find($request->id) : new Product(); 
+
+            $product = $request->id ? Product::find($request->id) : new Product();
             $product->title = $request->title;
             $product->slug = $request->slug;
             $product->detail_description = $request->detail_description;
@@ -119,7 +120,7 @@ class ProductServices
     public function edit($request)
     {
         $editProduct = Product::find($request->id);
-        $productImages = ProductImage::where('product_id', $request->id)->get(); 
+        $productImages = ProductImage::where('product_id', $request->id)->get();
         $subCategories = SubCategory::orderBy('id', 'desc')->get();
         return view('admin.products.edit', compact('editProduct', 'productImages', 'subCategories'));
     }
@@ -183,19 +184,19 @@ class ProductServices
 
 
     public function destroy($id)
-    {  
+    {
         $product = Product::find($id);
 
         $productImages = ProductImage::where('product_id', $product->id)->get();
-        if(!empty($productImages)){
+        if (!empty($productImages)) {
             foreach ($productImages as $productImage) {
                 File::delete(public_path() . '/uploads/product/large/' . $productImage->image);
-                File::delete(public_path() . '/uploads/product/small/' . $productImage->image); 
+                File::delete(public_path() . '/uploads/product/small/' . $productImage->image);
             }
             ProductImage::where('product_id', $product->id)->delete();
-        } 
-        
-        $product->delete(); 
+        }
+
+        $product->delete();
 
         return response()->json([
             "status" => true,
@@ -203,4 +204,64 @@ class ProductServices
         ]);
     }
 
+    public function featuredProduct()
+    {
+        $featured = FeaturedProduct::all();
+        return view('admin.featured.index', compact('featured'));
+    }
+
+    public function createFeaturedProduct()
+    {
+        return view('admin.featured.create');
+    }
+    public function storeFeaturedProduct($request)
+    { 
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'image' => 'required',
+            'description' => 'required',
+            'price' => 'required',
+            'qty' => 'required',
+            'status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()]);
+        }
+
+        if ($validator->passes()) {
+            $featured = $request->id ? FeaturedProduct::find($request->id) : new FeaturedProduct();
+            $featured->name = $request->name;
+            $featured->slug = $request->slug;
+            $featured->description = $request->description;
+            $featured->qty = $request->qty;
+            $featured->price = $request->price;
+            $featured->status = $request->status;
+            $featured->showHome = $request->show_on_home;
+            $featured->save();
+
+            if (!empty($request->image)) {
+                $tempImageInfo = TempImage::find($request->image);
+                $extArray = explode('.', $tempImageInfo->name);
+                $ext = last($extArray);
+                $newImageName = $request->slug . '-' . $featured->id . '-' . time() . '.' . $ext;
+                $featured->image = $newImageName;
+                $featured->save();
+
+                // For Large Image
+                try {
+                    $spath = public_path() . '/temp/' . $tempImageInfo->name;
+                    $dpath = public_path() . '/uploads/featured/' . $newImageName;
+                    $manager = new ImageManager(new Driver());
+                    $image = $manager->read($spath);
+                    $image->resize(1400, 900);
+                    $image->save($dpath);
+                } catch (\Exception $e) {
+                    dd($e->getMessage());
+                }
+            }
+            $message = $request->id ? 'Featured Product updated successfully.' : 'Featured Product created successfully.';
+            return response()->json(['status' => true, 'message' => $message]);
+        }
+    }
 }

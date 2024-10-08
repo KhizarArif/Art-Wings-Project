@@ -54,7 +54,7 @@
                                                     class="btn btn-danger btn-sm delete"> Delete </a>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>z
                                 @endforeach
                             @endif
                         </div>

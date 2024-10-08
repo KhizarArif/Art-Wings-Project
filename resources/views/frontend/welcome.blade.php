@@ -54,6 +54,9 @@
 
     @include('frontend.categories')
 
+    
+    @include('frontend.featured')
+
  
 @endsection
 

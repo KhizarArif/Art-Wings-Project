@@ -33,5 +33,14 @@ class ProductController extends Controller
     public function destroy($id){
         return $this->productServices->destroy($id);
     }
+    public function featuredProduct(){
+        return $this->productServices->featuredProduct();
+    }
+    public function createFeaturedProduct(){
+        return $this->productServices->createFeaturedProduct();
+    }
+    public function storeFeaturedProduct(Request $request){
+        return $this->productServices->storeFeaturedProduct($request);
+    }
 }
     

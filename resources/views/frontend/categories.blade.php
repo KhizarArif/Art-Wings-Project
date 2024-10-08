@@ -11,8 +11,7 @@
                                 <li class="nav-item " role="presentation">
                                     <a class="nav-link active" id="pills-{{ $subcategory->id }}-tab" data-toggle="pill"
                                         href="#pills-{{ $subcategory->id }}" role="tab"
-                                        aria-controls="pills-{{ $subcategory->id }}"
-                                        aria-selected="true">
+                                        aria-controls="pills-{{ $subcategory->id }}" aria-selected="true">
                                         <h6 class="text-black"> {{ $subcategory->name }} </h6>
                                     </a>
                                 </li>
