@@ -30,9 +30,9 @@
     <link rel="stylesheet" href="css/mdb.min.css" />
 
     <!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- Bootstrap JavaScript -->
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Bootstrap JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 
 
     <!-- Styles -->
@@ -86,10 +86,11 @@
 
 <body>
     <!--Main Navigation-->
-    <header>
+    <header style="height: 15vh;">
 
         <!-- Navbar -->
-        <nav id="main-navbar" class="navbar navbar-expand-md fixed-top navbar-before-scroll shadow-0" style="height:10vh;">
+        <nav id="main-navbar" class="navbar navbar-expand-md fixed-top navbar-before-scroll shadow-0"
+            style="height:10vh;">
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Toggle button -->
@@ -154,11 +155,11 @@
         </nav>
         <!-- Navbar -->
 
-        <div class="row d-flex justify-content-center align-items-center bg-white">
+        {{-- <div class="row d-flex justify-content-center align-items-center bg-white">
             <?php
-
+            
             use function App\Helpers\getSubCategories;
-
+            
             $subCategories = getSubCategories();
             ?>
             @if ($subCategories->isNotEmpty())
@@ -170,7 +171,7 @@
             </div>
             @endforeach
             @endif
-        </div>
+        </div> --}}
 
     </header>
     <!--Main Navigation-->

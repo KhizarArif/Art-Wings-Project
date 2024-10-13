@@ -7,19 +7,22 @@
                     <h4> Update Featured Product </h4>
                     <form class="custom-validation" novalidate id="featuredProductForm">
                         @csrf
+                        <input type="hidden" name="id" value="{{$editFeatured->id}}" id="id">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label">Name</label>
                                     <input type="text" class="form-control" name="name" id="name"
-                                        placeholder="Category Name" required>
+                                        placeholder="Featured Name"
+                                        value="{{ isset($editFeatured->name) ? $editFeatured->name : '' }}" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="validationCustom02" class="form-label">Slug</label>
                                     <input type="text" class="form-control" name="slug" id="slug"
-                                        placeholder="slug" readonly>
+                                        placeholder="slug"
+                                        value="{{ isset($editFeatured->slug) ? $editFeatured->slug : '' }}" readonly>
 
                                 </div>
                             </div>
@@ -38,29 +41,49 @@
                             </div>
                         </div>
 
-                        <div class="row" id="featured_gallery"></div>
+                        <div class="row" id="featured_gallery">
+                            @if ($editFeatured != null) 
+                                    <div class="col-md-2" id="image-row-{{ $editFeatured->id }}">
+                                        <div class="card">
+                                            <input type="hidden" name="image_array" value="{{ $editFeatured->id }}">
+                                            <img src="{{ asset('uploads/featured/' . $editFeatured->image) }}" class="card-img-top"
+                                                alt="...">
+                                            <div class="card-body">
+                                                <a href="javascript:void(0)" onClick="deleteImage( '{{ $editFeatured->id }}')"
+                                                    class="btn btn-danger btn-sm delete"> Delete </a>
+                                            </div>
+                                        </div>
+                                    </div> 
+                            @endif
+                        </div>
 
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-8">
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label"> Detail Description. </label>
                                     <textarea class="form-control" placeholder=" Product Description... " name="description" id="validationCustom01"
-                                        rows="5" required> 
+                                        rows="5" required>  
+                                        {{ isset($editFeatured->description) ? $editFeatured->description : null }}
                                     </textarea>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label"> Quantity </label>
                                     <input type="number" class="form-control" name="qty" id="qty"
-                                        placeholder="Quantity" required>
+                                        placeholder="Quantity"
+                                        value="{{ isset($editFeatured->qty) ? $editFeatured->qty : '' }}" required>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-6">
                                 <div class="mb-3">
                                     <label for="validationCustom01" class="form-label"> Price </label>
                                     <input type="number" class="form-control" name="price" id="price"
-                                        placeholder="Price" required>
+                                        placeholder="Price"
+                                        value="{{ isset($editFeatured->price) ? $editFeatured->price : '' }}" required>
                                 </div>
                             </div>
                         </div>
@@ -73,8 +96,11 @@
                                         <option selected disabled value="">
                                             Select option ...
                                         </option>
-                                        <option> Active </option>
-                                        <option> InActive </option>
+                                        <option value="active" {{ $editFeatured->status == 'active' ? 'selected' : '' }}>
+                                            Active </option>
+                                        <option value="inactive"
+                                            {{ $editFeatured->status == 'inactive' ? 'selected' : '' }}> InActive
+                                        </option>
                                     </select>
                                 </div>
                             </div>
@@ -85,8 +111,10 @@
                                         <option selected disabled value="">
                                             Select option ...
                                         </option>
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                        <option value="yes" {{ $editFeatured->showHome == 'yes' ? 'selected' : '' }}>
+                                            Yes</option>
+                                        <option value="no" {{ $editFeatured->showHome == 'no' ? 'selected' : '' }}>No
+                                        </option>
                                     </select>
                                 </div>
                             </div>

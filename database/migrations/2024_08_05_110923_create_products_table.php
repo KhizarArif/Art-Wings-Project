@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->text('description')->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('detail_description')->nullable();
             $table->double('price', 10, 2);
             $table->double('original_price', 10, 2);
             $table->unsignedBigInteger('sub_category_id');

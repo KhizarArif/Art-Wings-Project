@@ -42,5 +42,11 @@ class ProductController extends Controller
     public function storeFeaturedProduct(Request $request){
         return $this->productServices->storeFeaturedProduct($request);
     }
+    public function editFeaturedProduct(Request $request){
+        return $this->productServices->editFeaturedProduct($request);
+    }
+    public function destroyFeaturedProduct($id){
+        return $this->productServices->destroyFeaturedProduct($id);
+    }
 }
     

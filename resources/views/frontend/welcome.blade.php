@@ -25,8 +25,8 @@
                                     </a>
                                     <div class="overlay">
                                         <div class="icons">
-                                            <a href="{{ route('frontend.subProducts', $subcategory->slug) }}">
-                                                <i class="fa fa-eye" aria-hidden="true" data-toggle="tooltip"
+                                            <a href="javascript::void(0)">
+                                                <i class="fa fa-shopping-cart" aria-hidden="true" data-toggle="tooltip"
                                                     data-placement="top" title="view details"></i>
                                             </a>
                                         </div>
@@ -35,10 +35,10 @@
                                 </div>
                                 <div class="card-body d-flex flex-column">
                                     <h5 class="card-title shop-item-title">{{ $subcategory->name }}</h5>
-                                    {{-- <p class="card-text shop-item-price w-100 d-flex justify-content-between">
+                                    <p class="card-text shop-item-price w-100 d-flex justify-content-between">
                                         <span class="original-price">Rs. {{ $subcategory->price }} PKR</span>
-                                        <span class="discounted-price">Rs. PKR</span>
-                                    </p> --}}
+                                        <span class="discounted-price">Rs. {{ $subcategory->price }} PKR</span>
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -54,10 +54,10 @@
 
     @include('frontend.categories')
 
-    
+
     @include('frontend.featured')
 
- 
+
 @endsection
 
 @section('customJs')

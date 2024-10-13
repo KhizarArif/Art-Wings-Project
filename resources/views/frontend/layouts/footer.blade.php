@@ -14,6 +14,46 @@
             navbar.classList.remove("navbar-after-scroll")
         }
     })
+
+    document.getElementById('increment-btn').addEventListener('click', function() {
+        let quantityInput = document.getElementById('quantity-input');
+        let currentValue = parseInt(quantityInput.value);
+        quantityInput.value = currentValue + 1;
+    });
+
+    document.getElementById('decrement-btn').addEventListener('click', function() {
+        let quantityInput = document.getElementById('quantity-input');
+        let currentValue = parseInt(quantityInput.value);
+        if (currentValue > 1) {
+            quantityInput.value = currentValue - 1;
+        }
+    });
+
+    function addToCart(productId, productImageId = null) {
+        console.log("productId: ", productId, "productImageId: ", productImageId); 
+        $.ajax({
+            url: "{{ route('front.addToCart') }}",
+            type: "POST",
+            data: {
+                id: productId,
+                image_id: productImageId
+            },
+            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(response) {
+                console.log(response);
+                if (response.status == true) {
+                    window.location.href = "{{ route('front.cart') }}";
+                } else {
+                    console.log("Error");
+                    alert(response.message);
+                }
+            }
+        })
+    }
+
 </script>
 @yield('customJs')
 

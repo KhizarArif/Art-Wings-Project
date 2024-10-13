@@ -217,8 +217,7 @@ class ProductServices
     public function storeFeaturedProduct($request)
     { 
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'image' => 'required',
+            'name' => 'required', 
             'description' => 'required',
             'price' => 'required',
             'qty' => 'required',
@@ -263,5 +262,16 @@ class ProductServices
             $message = $request->id ? 'Featured Product updated successfully.' : 'Featured Product created successfully.';
             return response()->json(['status' => true, 'message' => $message]);
         }
+    }
+
+    public function editFeaturedProduct($request){
+        $editFeatured = FeaturedProduct::find($request->id);
+        return view('admin.featured.edit', compact('editFeatured'));
+    }
+
+    public function destroyFeaturedProduct($id){
+        $featured = FeaturedProduct::find($id);
+        $featured->delete();
+        return response()->json(['success' => true, 'message' => 'Featured Product deleted successfully']);
     }
 }

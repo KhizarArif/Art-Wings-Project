@@ -5,13 +5,13 @@ namespace App\Http\Services;
 use App\Http\Controllers\FrontController;
 use App\Models\Category;
 use App\Models\City;
+use App\Models\FeaturedProduct;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
 use App\Models\Review;
 use App\Models\ShippingCharge;
 use App\Models\SubCategory;
-use App\Models\SubCategoryImage;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -22,19 +22,29 @@ class FrontendServices
     public function index()
     {
         $subCatId = [];
-        $subCategories = SubCategory::where([['status', "active"], ['showHome', "yes"]])->with('subCategoryImages')->get();    
+        $subCategories = SubCategory::where([['status', "active"], ['showHome', "yes"]])->with('subCategoryImages')->get();
         $reviews = Review::all();
-        return view('frontend.welcome', compact('subCategories', 'reviews'));
+        $featuredProducts = FeaturedProduct::where([['status', 'active'], ['showHome', 'yes']])->get();
+        return view('frontend.welcome', compact('subCategories', 'reviews', 'featuredProducts'));
     }
 
-    public function subProducts($subcategorySlug){
+    public function cart()
+    { 
+        
+        $contentCart = Cart::content(); 
+        return view('frontend.addToCart', compact('contentCart'));
+    }
+
+
+    public function subProducts($subcategorySlug)
+    {
         // $products = Product
         $subcategorySelected = '';
         $products = collect();
-        if(!empty($subcategorySlug)){
+        if (!empty($subcategorySlug)) {
             $productsQuery = Product::with('productImages')->where('status', "active");
             $subcategory = SubCategory::where('slug', $subcategorySlug)->first();
-            if($subcategory){
+            if ($subcategory) {
                 $productsQuery->where('sub_category_id', $subcategory->id);
                 $subcategorySelected = $subcategory->id;
             }
@@ -53,13 +63,10 @@ class FrontendServices
 
     public function productDetails($request, $subcategorySlug, $productSlug)
     {
-
-
-        $categorySelected = "";
+        $productSelected = "";
         $subcategorySelected = "";
 
-        $categories = Category::with('subCategories')->orderBy("name", "asc")->where('status', "active")->get();
-        $products = collect();
+       $products = collect();
 
         if (!empty($productSlug) || !empty($subcategorySlug)) {
             $productsQuery = Product::with('productImages')->where('status', "active");
@@ -84,9 +91,7 @@ class FrontendServices
             $products = $productsQuery->paginate(6);
         }
 
-
-
-        return view('frontend.addToCart', compact('categories', 'products', 'categorySelected', 'subcategorySelected'));
+        return view('frontend.addToCart', compact( 'products', 'productSelected', 'subcategorySelected'));
     }
 
     public function addToCart($request)
@@ -106,8 +111,7 @@ class FrontendServices
             $productImage = $product->productImages->where('id', $request->image_id)->first();
         }
 
-        $size = $request->input('size');
-        $quantity = $request->input('quantity', 1);
+        $qty = $request->input('qty', 1);
 
         if (Cart::count() > 0) {
             $contentCart = Cart::content();
@@ -120,7 +124,7 @@ class FrontendServices
             }
 
             if ($productAlreadyExists == false) {
-                Cart::add($product->id, $product->title, $quantity, $product->price, ["productImage" => $productImage, "size" => $size]);
+                Cart::add($product->id, $product->title, $qty, $product->price, ["productImage" => $productImage]);
                 $status = true;
                 $message = $product->title . ' added to Cart';
             } else {
@@ -128,7 +132,7 @@ class FrontendServices
                 $message = $product->title . ' already added to Cart';
             }
         } else {
-            Cart::add($product->id, $product->title, $quantity, $product->price, ["productImage" => $productImage, "size" => $size]);
+            Cart::add($product->id, $product->title, $qty, $product->price, ["productImage" => $productImage]);
             $status = true;
             $message = $product->title . ' added to Cart';
         }
@@ -165,25 +169,13 @@ class FrontendServices
     public function updateCart(Request $request)
     {
         $rowId = $request->rowId;
-        $qty = $request->qty;
-        $size = $request->size;
+        $qty = $request->qty; 
 
         $cartInfo = Cart::get($rowId);
-        $product = Product::find($cartInfo->id)->with('productSizes')->first();
+        $product = Product::find($cartInfo->id);
 
 
-        if($size == 'small'){
-            $productSize = $product->productSizes[0]->small;
-            
-        }elseif($size == 'medium'){
-            $productSize = $product->productSizes[0]->medium;
-        }elseif($size == 'large'){
-            $productSize = $product->productSizes[0]->large;
-        }elseif($size == 'x_large'){
-            $productSize = $product->productSizes[0]->x_large;
-        }
-
-        if ($qty <= $productSize) {
+        if ($qty <= $product->qty) {
             Cart::update($rowId, $qty);
             $status = true;
             $message = "Cart Updated Successfully!.";
@@ -291,7 +283,7 @@ class FrontendServices
             $orderItem->qty = $item->qty;
             $orderItem->total = $item->price * $item->qty;
 
-            $productData = Product::with('productImages')->with('productSizes')->find($item->id);
+            $productData = Product::with('productImages')->find($item->id);
 
             if ($productData && $productData->productImages->isNotEmpty()) {
                 $orderItem->product_image_id = $productData->productImages[0]->id;
@@ -299,27 +291,6 @@ class FrontendServices
                 $orderItem->product_image_id = null;
             }
 
-
-
-            if ($productData && $productData->productSizes->isNotEmpty()) {
-                if ($request->size == "small") {
-                    $currentQty = $productData->productSizes[0]->small;
-                    $updatedQty = $currentQty - $item->qty;
-                    $productData->productSizes[0]->small = $updatedQty;
-                } elseif ($request->size == "medium") {
-                    $currentQty = $productData->productSizes[0]->medium;
-                    $updatedQty = $currentQty - $item->qty;
-                    $productData->productSizes[0]->medium = $updatedQty;
-                } elseif ($request->size == "large") {
-                    $currentQty = $productData->productSizes[0]->large;
-                    $updatedQty = $currentQty - $item->qty;
-                    $productData->productSizes[0]->large = $updatedQty;
-                } else {
-                    $currentQty = $productData->productSizes[0]->x_large;
-                    $updatedQty = $currentQty - $item->qty;
-                    $productData->productSizes[0]->x_large = $updatedQty;
-                }
-            }
 
             // Update product quantity
             $productData->save();
@@ -350,5 +321,4 @@ class FrontendServices
         $subCategoryProducts = Product::where('sub_category_id', $subcategoryId)->get();
         return view('frontend.subCategoryProducts', compact('subCategoryProducts'));
     }
-
 }

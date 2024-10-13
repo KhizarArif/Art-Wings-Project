@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->text('description');
             $table->string('name');
+            $table->string('slug');
             $table->integer('qty');
             $table->double('price', 10, 2); 
             $table->enum('status', ['active', 'inactive'])->default('inactive'); 

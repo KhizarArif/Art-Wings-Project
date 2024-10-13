@@ -107,7 +107,7 @@
                             window.location.reload();
                         },
                         error: function(xhr, status, error) {
-                            Swal.fire("Error!", "Failed to delete the Category ", "error");
+                            Swal.fire("Error!", "Failed to delete the Featured Product ", "error");
                         }
                     });
                 }

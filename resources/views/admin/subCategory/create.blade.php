@@ -48,8 +48,8 @@
                                         <option selected disabled value="">
                                             Select option ...
                                         </option>
-                                        <option> Active </option>
-                                        <option> InActive </option>
+                                        <option value="active"> Active </option>
+                                        <option value="inactive"> InActive </option>
                                     </select> 
                                 </div>
                             </div>
@@ -60,22 +60,14 @@
                                         <option selected disabled value="">
                                             Select option ...
                                         </option>
-                                        <option>Yes</option>
-                                        <option>No</option>
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
-                            <label class="form-check-label" for="invalidCheck">
-                                Agree to terms and conditions
-                            </label>
-                            <div class="invalid-feedback">
-                                You must agree before submitting.
-                            </div>
-                        </div>
+                       
                         <div>
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
