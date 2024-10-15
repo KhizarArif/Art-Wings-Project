@@ -14,7 +14,7 @@
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}" {{ $shippingCharge->city_id == $city->id ? 'selected' : ''}} >{{ $city->name }}</option>
                                 @endforeach
-                                <option value="rest_of_cities"> Rest Of The Cities </option>
+                                <option value="250"> Rest Of The Cities </option>
                             @endif
                         </select>
                     </div>

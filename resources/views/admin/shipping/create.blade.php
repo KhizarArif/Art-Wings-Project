@@ -13,7 +13,7 @@
                                 @foreach ($cities as $city)
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
-                                <option value="rest_of_cities"> Rest Of The Cities </option>
+                                <option value="250"> Rest Of The Cities </option>
                             @endif
                         </select>
                     </div>
@@ -41,7 +41,7 @@
                     @foreach ($shippingCharges as $shippingCharge)
                         <tr>
                             <td> {{ $shippingCharge->id }} </td>
-                            <td> {{ $shippingCharge->city_id == 'rest_of_cities' ? 'Rest Of The Cities' : $shippingCharge->name }}
+                            <td> {{ $shippingCharge->city_id == 250 ? 'Rest Of The Cities' : $shippingCharge->name }}
                             </td>
                             <td> Rs {{ $shippingCharge->amount }} </td>
                             <td>

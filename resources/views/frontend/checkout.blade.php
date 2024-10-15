@@ -33,7 +33,7 @@
                                     <option value="{{ $city->id }}">{{ $city->name }}</option>
                                 @endforeach
                             @endif
-                            <option value="rest_of_cities">Rest of Cities</option>
+                            <option value="250">Rest of Cities</option>
                         </select>
                     </div>
                     <div class="row mb-3">
@@ -78,9 +78,7 @@
                 <div class="border p-3 mb-3">
                     @if (!empty($checkoutContent))
                         @foreach ($checkoutContent as $content)
-                            <div class="product_info">
-                                <input type="hidden" class="form-control" id="size_{{ $content->id }}" name="size"
-                                    value="{{ $content->options->size }}">
+                            <div class="product_info"> 
                                 <input type="hidden" class="form-control" name="qty" id="qty"
                                     value="{{ isset($content) ? $content->qty : 0 }}">
 
@@ -91,10 +89,9 @@
                                     <div class="product_qty_badge"> {{ $content->qty }} </div>
                                 </div>
                                 <div class="description ">
-                                    <p>{{ $content->name }}</p>
-                                    <small>{{ $content->options->size }}</small>
+                                    <p class="product_name">{{ $content->name }}</p> 
+                                    <p class="product_price">Rs. {{ $content->price }}</p>
                                 </div>
-                                <p class="product_price">Rs. {{ $content->price }}</p>
 
                             </div>
                         @endforeach
@@ -126,12 +123,8 @@
 @section('customJs')
     <script>
         $("#checkout_form").submit(function(e) {
-            e.preventDefault();
-
-            var formData = $(this).serializeArray();
-
-          
-
+            e.preventDefault(); 
+            var formData = $(this).serializeArray(); 
             $('input[name="qty"]').each(function() {
                 formData.push({
                     name: 'qty',
@@ -152,8 +145,8 @@
                     if (response.status == true) {
                         console.log("Successfull", response);
                         var encryptedOrderId = response.orderId;
-                        window.location.href = "{{ route('front.thankyou', '') }}/" +
-                            encryptedOrderId;
+                        console.log(encryptedOrderId);
+                        window.location.href = "{{ route('front.thankyou', '')  }}/"+encryptedOrderId;
                     }
                 }
             })

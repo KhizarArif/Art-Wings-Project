@@ -1,9 +1,65 @@
-<script type="text/javascript" src="js/mdb.umd.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.umd.min.js"></script>
+{{-- Footer Start --}}
+<footer class="bg-dark text-light pt-4">
+    <div class="container">
+        <div class="row">
+            <!-- About Us Column -->
+            <div class="col-md-4">
+                <h5>ABOUT US</h5>
+                <hr class="bg-light">
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none text-light">Our Story</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Careers</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Contact Us</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Gift Cards</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Store Locator</a></li>
+                </ul>
+            </div>
+
+            <!-- Customer Services Column -->
+            <div class="col-md-4">
+                <h5>CUSTOMER SERVICES</h5>
+                <hr class="bg-light">
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-decoration-none text-light">Customer Service</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Returns & Exchanges</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Delivery & Assembly</a></li>
+                    <li><a href="#" class="text-decoration-none text-light">Gift Cards - Terms & Conditions</a>
+                    </li>
+                    <li><a href="#" class="text-decoration-none text-light">Installment Plan With Bank Alfalah</a>
+                    </li>
+                    <li><a href="#" class="text-decoration-none text-light">Warranty Activation</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter Column -->
+            <div class="col-md-4">
+                <h5>NEWSLETTER</h5>
+                <hr class="bg-light">
+                <p>Enter your email to receive daily news and get 20% off coupon for all items.</p>
+                <form class="d-flex">
+                    <input type="email" class="form-control" placeholder="Email address">
+                    <button type="submit" class="btn btn-light ms-2"><i class="bi bi-send"></i></button>
+                </form>
+                <!-- Social Media Icons -->
+                <div class="mt-3">
+                    <a href="#" class="text-light me-2"><i class="bi bi-facebook"></i></a>
+                    <a href="#" class="text-light me-2"><i class="bi bi-instagram"></i></a>
+                    <a href="#" class="text-light me-2"><i class="bi bi-linkedin"></i></a>
+                    <a href="#" class="text-light me-2"><i class="bi bi-youtube"></i></a>
+                    <a href="#" class="text-light"><i class="bi bi-tiktok"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+{{-- Footer END --}}
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-<script src="https://kit.fontawesome.com/a076d05399.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js">
+    < /scrip> <
+    script src = "https://kit.fontawesome.com/a076d05399.js" >
+</script>
 <script>
     const navbar = document.getElementById("main-navbar")
 
@@ -30,7 +86,7 @@
     });
 
     function addToCart(productId, productImageId = null) {
-        console.log("productId: ", productId, "productImageId: ", productImageId); 
+        console.log("productId: ", productId, "productImageId: ", productImageId);
         $.ajax({
             url: "{{ route('front.addToCart') }}",
             type: "POST",
@@ -48,12 +104,11 @@
                     window.location.href = "{{ route('front.cart') }}";
                 } else {
                     console.log("Error");
-                    alert(response.message);
+                    toast.error(response.message);
                 }
             }
         })
     }
-
 </script>
 @yield('customJs')
 

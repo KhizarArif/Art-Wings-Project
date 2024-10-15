@@ -7,6 +7,19 @@
   font-family: "Montserrat", sans-serif;
 }
 
+.category_container{
+  min-width: fit-content;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.category_container:hover{
+  background-color: #F67280;
+  color: #fff;
+}
 
 .hero_img_container {
   height: 100vh;
@@ -800,8 +813,13 @@
   font-size: 0.9rem;
 }
 
-.product_price {
-  text-align: end;
+.product_name{
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.product_price { 
+
   align-self: center;
 }
 

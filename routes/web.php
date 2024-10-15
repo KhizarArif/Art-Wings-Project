@@ -40,12 +40,12 @@ Route::controller(FrontController::class)->group(function () {
     Route::get('/cart', 'cart')->name('front.cart');
     Route::get('/all_products/{subcategorySlug?}', 'subProducts')->name('frontend.subProducts'); 
     Route::get('checkouts', 'checkouts')->name('front.checkouts');
-    Route::get('/thankyou', 'thankyou')->name('front.thankyou');
-    Route::post('/add_to_cart', 'addToCart')->name('front.addToCart');
-    Route::post('/update_cart', 'updateCart')->name('front.updateCart');
-    Route::post('/get_shipping_amount', 'getShippingAmount')->name('shipping.getShippingAmount');
-    Route::post('/process_checkout', 'processCheckout')->name('front.processCheckout');
-    Route::delete('/delete_cart', 'deleteToCart')->name('front.deleteToCart');
+    Route::get('thankyou/{id}', 'thankyou')->name('front.thankyou');
+    Route::post('add_to_cart', 'addToCart')->name('front.addToCart');
+    Route::post('update_cart', 'updateCart')->name('front.updateCart');
+    Route::post('get_shipping_amount', 'getShippingAmount')->name('shipping.getShippingAmount');
+    Route::post('process_checkout', 'processCheckout')->name('front.processCheckout');
+    Route::delete('delete_cart', 'deleteToCart')->name('front.deleteToCart');
 });
 
 

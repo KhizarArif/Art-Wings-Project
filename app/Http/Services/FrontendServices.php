@@ -29,9 +29,9 @@ class FrontendServices
     }
 
     public function cart()
-    { 
-        
-        $contentCart = Cart::content(); 
+    {
+
+        $contentCart = Cart::content();
         return view('frontend.addToCart', compact('contentCart'));
     }
 
@@ -66,7 +66,7 @@ class FrontendServices
         $productSelected = "";
         $subcategorySelected = "";
 
-       $products = collect();
+        $products = collect();
 
         if (!empty($productSlug) || !empty($subcategorySlug)) {
             $productsQuery = Product::with('productImages')->where('status', "active");
@@ -91,7 +91,7 @@ class FrontendServices
             $products = $productsQuery->paginate(6);
         }
 
-        return view('frontend.addToCart', compact( 'products', 'productSelected', 'subcategorySelected'));
+        return view('frontend.addToCart', compact('products', 'productSelected', 'subcategorySelected'));
     }
 
     public function addToCart($request)
@@ -169,7 +169,7 @@ class FrontendServices
     public function updateCart(Request $request)
     {
         $rowId = $request->rowId;
-        $qty = $request->qty; 
+        $qty = $request->qty;
 
         $cartInfo = Cart::get($rowId);
         $product = Product::find($cartInfo->id);
@@ -202,7 +202,7 @@ class FrontendServices
     public function getShippingAmount(Request $request)
     {
         $subTotal = Cart::subtotal(2, '.', '');
-        if ($request->city_id > 0) {
+        if ($request->city_id > 0 && $request->city_id < 240) {
             $shippingInfo = ShippingCharge::where('city_id', $request->city_id)->first();
 
             $grandTotal = 0;
@@ -218,7 +218,7 @@ class FrontendServices
                     "grandTotal" => $grandTotal
                 ]);
             } else {
-                $shippingInfo = ShippingCharge::where('city_id', "rest_of_cities")->first();
+                $shippingInfo = ShippingCharge::where('city_id', 250)->first();
                 $totalShippingCharges = $shippingInfo->amount;
                 $grandTotal = $subTotal  + $totalShippingCharges;
 
@@ -299,18 +299,17 @@ class FrontendServices
         }
 
         Cart::destroy();
-        $encryptedOrderId = Crypt::encrypt($order->id);
 
         return response()->json([
             'message' => 'Order Created Successfully',
-            'orderId' => $encryptedOrderId,
+            'orderId' => $order->id,
             'status' => true,
         ]);
     }
 
     public function thankyou($request)
     {
-        $id = decrypt($request->id);
+        $id = $request->id;
         $order = Order::find($id);
 
         return view('frontend.thankyou', compact('order'));

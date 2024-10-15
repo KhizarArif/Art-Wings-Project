@@ -8,12 +8,12 @@
                     <ul class="nav nav-pills d-none d-md-flex text-center" id="pills-tab" role="tablist">
                         @if ($subCategories != null)
                             @foreach ($subCategories as $subcategory)
-                                <li class="nav-item " role="presentation">
-                                    <a class="nav-link active" id="pills-{{ $subcategory->id }}-tab" data-toggle="pill"
+                                <li class="category_container" role="presentation">
+                                    <a class=" p-0" id="pills-{{ $subcategory->id }}-tab" data-toggle="pill"
                                         href="#pills-{{ $subcategory->id }}" role="tab"
                                         aria-controls="pills-{{ $subcategory->id }}" aria-selected="true">
-                                        <h6 class="text-black"> {{ $subcategory->name }} </h6>
                                     </a>
+                                    <h6 class="m-0"> {{ $subcategory->name }} </h6>
                                 </li>
                             @endforeach
                         @endif
@@ -25,7 +25,7 @@
                     @foreach ($subCategories as $subcategory)
                         <div class="tab-pane fade show active" id="pills-{{ $subcategory->id }}" role="tabpanel"
                             aria-labelledby="pills-{{ $subcategory->id }}-tab">
-                            <div class="container-fluid">
+                            <div class="container mb-3">
                                 <div class="row">
                                     @foreach ($subcategory->subCategoryImages as $subImage)
                                         <div
