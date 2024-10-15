@@ -10,7 +10,7 @@
     {{-- New Arrivals Start  --}}
     <section class="m-4">
         <h1 class="new_arrival_title"> New Arrivals</h1>
-        <div class="contianer">
+        <div class="new_arrival_contianer">
 
             <div class="row row-cols-2 row-cols-md-3 g-4" id="product-list">
                 @if ($subCategories != null)
