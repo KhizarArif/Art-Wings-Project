@@ -7,6 +7,7 @@ use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\FrontController;
+use App\Http\Controllers\NewArrivalController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ShippingController;
@@ -109,6 +110,19 @@ Route::group(["prefix" => "dashboard"], function () {
                 Route::post('store', 'storeFeaturedProduct')->name('featured_products.store');
                 Route::delete('delete/{id}', 'destroyFeaturedProduct')->name('featured_products.delete');
             });
+        });
+
+        Route::controller(NewArrivalController::class)->prefix('new_arrivals')->group(function () {
+            Route::get('', 'index')->name('new_arrivals.index');
+            Route::get('create', 'create')->name('new_arrivals.create');
+            Route::get('edit/{id}', 'edit')->name('new_arrivals.edit');
+            Route::post('store', 'store')->name('new_arrivals.store');
+            Route::delete('delete/{id}', 'destroy')->name('new_arrivals.delete');
+
+            // Update Product Controller Image
+            Route::post('new_arrival_image/update', 'updateProductImage')->name('new_arrivals.updateImage');
+            Route::delete('new_arrival_image', 'deleteProductImage')->name('new_arrivals.deleteImage');
+
         });
 
         // Order Details 

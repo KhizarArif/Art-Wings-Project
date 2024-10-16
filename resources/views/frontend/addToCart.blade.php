@@ -74,9 +74,16 @@
                     @foreach ($contentCart as $content)
                         <tr class="product_body">
                             <td class="product_img_container">
-                                <img class="product_img"
-                                    src="{{ asset('uploads/product/small/' . $content->options->productImage->image) }}"
-                                    alt="">
+                                @if ($content->options->newArrivalImages && $content->options->newArrivalImages->image == null)
+                                    <img class="product_img"
+                                        src="{{ asset('uploads/NewArrival/small/' . $content->options->newArrivalImages->image) }}"
+                                        alt="">
+                                @else
+                                    <img class="product_img"
+                                        src="{{ asset('uploads/product/small/' . $content->options->productImage->image) }}"
+                                        alt="">
+                                @endif
+
                                 <div class="product_information">
                                     <p class="product-name">{{ $content->name }}</p>
                                     <a href="javascript:void(0)" class="remove"
@@ -172,7 +179,7 @@
 
 
         function updateCart(rowId, qty, button) {
-            console.log("rowId", rowId); 
+            console.log("rowId", rowId);
             $.ajax({
                 url: "{{ route('front.updateCart') }}",
                 type: "POST",
@@ -181,7 +188,7 @@
                 },
                 data: {
                     rowId: rowId,
-                    qty: qty, 
+                    qty: qty,
                 },
                 dataType: 'json',
                 success: function(response) {

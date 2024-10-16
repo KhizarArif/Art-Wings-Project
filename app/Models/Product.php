@@ -23,7 +23,4 @@ class Product extends Model
         return $this->belongsTo(SubCategory::class, 'sub_category_id', 'id');
     }
 
-    public function productSizes():HasMany{
-        return $this->hasMany(ProductSize::class, 'product_id', 'id');
-    }
 }

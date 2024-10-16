@@ -39,6 +39,12 @@
                  </li>
 
                  <li>
+                     <a href="{{ route('new_arrivals.index') }}" class=" waves-effect">
+                        <i class="ri-product-hunt-fill"></i>
+                         <span> New Arrival Products </span>
+                     </a>
+                 </li>
+                 <li>
                      <a href="{{ route('featured_products.index') }}" class=" waves-effect">
                         <i class="ri-product-hunt-fill"></i>
                          <span> Featured Products </span>

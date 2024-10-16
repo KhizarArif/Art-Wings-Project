@@ -6,6 +6,7 @@ use App\Http\Controllers\FrontController;
 use App\Models\Category;
 use App\Models\City;
 use App\Models\FeaturedProduct;
+use App\Models\NewArrival;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -25,7 +26,8 @@ class FrontendServices
         $subCategories = SubCategory::where([['status', "active"], ['showHome', "yes"]])->with('subCategoryImages')->get();
         $reviews = Review::all();
         $featuredProducts = FeaturedProduct::where([['status', 'active'], ['showHome', 'yes']])->get();
-        return view('frontend.welcome', compact('subCategories', 'reviews', 'featuredProducts'));
+        $newArrivalProducts = NewArrival::where('status', 'active')->with('newArrivalImages')->get();
+        return view('frontend.welcome', compact('subCategories', 'reviews', 'featuredProducts', 'newArrivalProducts'));
     }
 
     public function cart()
@@ -96,7 +98,11 @@ class FrontendServices
 
     public function addToCart($request)
     {
-        $product = Product::with('productImages')->find($request->id);
+        if ($request->feature == 'New Arrivals') {
+            $product = NewArrival::with('newArrivalImages')->find($request->id);
+        } else {
+            $product = Product::with('productImages')->find($request->id);
+        }
 
 
         if (empty($product)) {
@@ -108,7 +114,11 @@ class FrontendServices
 
         $productImage = null;
         if (!empty($request->image_id)) {
-            $productImage = $product->productImages->where('id', $request->image_id)->first();
+            if ($request->feature == 'New Arrivals') {
+                $productImage = $product->newArrivalImages->where('id', $request->image_id)->first();
+            } else {
+                $productImage = $product->productImages->where('id', $request->image_id)->first();
+            }
         }
 
         $qty = $request->input('qty', 1);
@@ -124,7 +134,11 @@ class FrontendServices
             }
 
             if ($productAlreadyExists == false) {
-                Cart::add($product->id, $product->title, $qty, $product->price, ["productImage" => $productImage]);
+                if ($request->feature == 'New Arrivals') {
+                    Cart::add($product->id, $product->title, $qty, $product->price, ["newArrivalImages" => $productImage]);
+                } else {
+                    Cart::add($product->id, $product->title, $qty, $product->price, ["productImage" => $productImage]);
+                }
                 $status = true;
                 $message = $product->title . ' added to Cart';
             } else {
@@ -132,7 +146,11 @@ class FrontendServices
                 $message = $product->title . ' already added to Cart';
             }
         } else {
-            Cart::add($product->id, $product->title, $qty, $product->price, ["productImage" => $productImage]);
+            if ($request->feature == 'New Arrivals') {
+                Cart::add($product->id, $product->title, $qty, $product->price, ["newArrivalImages" => $productImage]);
+            } else {
+                Cart::add($product->id, $product->title, $qty, $product->price, ["productImage" => $productImage]);
+            }
             $status = true;
             $message = $product->title . ' added to Cart';
         }

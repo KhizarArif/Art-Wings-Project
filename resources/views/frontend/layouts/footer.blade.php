@@ -71,28 +71,17 @@
         }
     })
 
-    document.getElementById('increment-btn').addEventListener('click', function() {
-        let quantityInput = document.getElementById('quantity-input');
-        let currentValue = parseInt(quantityInput.value);
-        quantityInput.value = currentValue + 1;
-    });
+ 
 
-    document.getElementById('decrement-btn').addEventListener('click', function() {
-        let quantityInput = document.getElementById('quantity-input');
-        let currentValue = parseInt(quantityInput.value);
-        if (currentValue > 1) {
-            quantityInput.value = currentValue - 1;
-        }
-    });
-
-    function addToCart(productId, productImageId = null) {
+    function addToCart(productId, productImageId = null, feature= null) {
         console.log("productId: ", productId, "productImageId: ", productImageId);
         $.ajax({
             url: "{{ route('front.addToCart') }}",
             type: "POST",
             data: {
                 id: productId,
-                image_id: productImageId
+                image_id: productImageId,
+                feature: feature
             },
             dataType: 'json',
             headers: {

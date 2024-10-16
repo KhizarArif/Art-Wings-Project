@@ -1,13 +1,10 @@
 <?php
 
 namespace App\Http\Services;
-
-use App\Models\Category;
+ 
 use App\Models\FeaturedProduct;
 use App\Models\Product;
-use App\Models\ProductImage;
-use App\Models\ProductSize;
-use App\Models\Review;
+use App\Models\ProductImage; 
 use App\Models\SubCategory;
 use App\Models\TempImage;
 use Illuminate\Support\Facades\Validator;

@@ -13,19 +13,19 @@
         <div class="new_arrival_contianer">
 
             <div class="row row-cols-2 row-cols-md-3 g-4" id="product-list">
-                @if ($subCategories != null)
-                    @foreach ($subCategories as $subcategory)
+                @if ($newArrivalProducts != null)
+                    @foreach ($newArrivalProducts as $newArrivalProduct)
                         <div
                             class="col-md-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
                             <div class="card border border-2">
                                 <div class="img-container position-relative">
                                     <a href="javascript::void(0)">
-                                        <img src="{{ asset('uploads/subCategory/large/' . $subcategory->subCategoryImages->first()->image) }}"
+                                        <img src="{{ asset('uploads/NewArrival/large/' . $newArrivalProduct->newArrivalImages->first()->image) }}"
                                             class="card-img-top shop-item-image" alt="">
                                     </a>
                                     <div class="overlay">
                                         <div class="icons">
-                                            <a href="javascript::void(0)">
+                                            <a href="javascript::void(0)" onclick="addToCart('{{  $newArrivalProduct->id }}', '{{  $newArrivalProduct->newArrivalImages->first()->id }}', 'New Arrivals')">
                                                 <i class="fa fa-shopping-cart" aria-hidden="true" data-toggle="tooltip"
                                                     data-placement="top" title="view details"></i>
                                             </a>
@@ -34,10 +34,10 @@
 
                                 </div>
                                 <div class="card-body d-flex flex-column">
-                                    <h5 class="card-title shop-item-title">{{ $subcategory->name }}</h5>
+                                    <h5 class="card-title shop-item-title">{{ $newArrivalProduct->title }}</h5>
                                     <p class="card-text shop-item-price w-100 d-flex justify-content-between">
-                                        <span class="original-price">Rs. {{ $subcategory->price }} PKR</span>
-                                        <span class="discounted-price">Rs. {{ $subcategory->price }} PKR</span>
+                                        <span class="original-price">Rs. {{ $newArrivalProduct->original_price }} </span>
+                                        <span class="discounted-price">Rs. {{ $newArrivalProduct->price }} </span>
                                     </p>
                                 </div>
                             </div>
