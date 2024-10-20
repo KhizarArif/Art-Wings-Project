@@ -10,14 +10,14 @@
     {{-- New Arrivals Start  --}}
     <section class="m-4">
         <h1 class="new_arrival_title"> New Arrivals</h1>
-        <div class="new_arrival_contianer">
+        <div class="new_arrival_container">
 
-            <div class="row row-cols-2 row-cols-md-3 g-4" id="product-list">
+            <div class="row g-4" id="product-list">
                 @if ($newArrivalProducts != null)
                     @foreach ($newArrivalProducts as $newArrivalProduct)
                         <div
-                            class="col-md-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
-                            <div class="card border border-2">
+                            class="col-md-4 col-lg-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
+                            <div class="card new_arrival_card border border-2">
                                 <div class="img-container position-relative">
                                     <a href="javascript::void(0)">
                                         <img src="{{ asset('uploads/NewArrival/large/' . $newArrivalProduct->newArrivalImages->first()->image) }}"
@@ -25,7 +25,8 @@
                                     </a>
                                     <div class="overlay">
                                         <div class="icons">
-                                            <a href="javascript::void(0)" onclick="addToCart('{{  $newArrivalProduct->id }}', '{{  $newArrivalProduct->newArrivalImages->first()->id }}', 'New Arrivals')">
+                                            <a href="javascript::void(0)"
+                                                onclick="newArrivalAddToCart('{{ $newArrivalProduct->id }}', '{{ $newArrivalProduct->newArrivalImages->first()->id }}', 'New Arrivals')">
                                                 <i class="fa fa-shopping-cart" aria-hidden="true" data-toggle="tooltip"
                                                     data-placement="top" title="view details"></i>
                                             </a>
@@ -62,110 +63,71 @@
 
 @section('customJs')
     <script>
-        $(document).ready(function() {
-            const $tabsToDropdown = $(".tabs-to-dropdown");
-            console.log("Starts");
-
-            function generateDropdownMarkup(container) {
-                const $navWrapper = container.find(".nav-wrapper");
-                const $navPills = container.find(".nav-pills");
-                const firstTextLink = $navPills.find("li:first-child a").text();
-                const $items = $navPills.find("li");
-                const markup = `
-                    <div class="dropdown d-md-none">
-                    <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        ${firstTextLink}
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"> 
-                        ${generateDropdownLinksMarkup($items)}
-                        khizar
-                    </div>
-                    </div>
-                `;
-                $navWrapper.prepend(markup);
-            }
-
-            function generateDropdownLinksMarkup(items) {
-                let markup = "";
-                items.each(function() {
-                    const textLink = $(this).find("a").text();
-                    markup += `<a class="dropdown-item" href="#">${textLink}</a>`;
-                });
-
-                return markup;
-            }
-
-            function showDropdownHandler(e) {
-                // works also
-                //const $this = $(this);
-                const $this = $(e.target);
-                const $dropdownToggle = $this.find(".dropdown-toggle");
-                const dropdownToggleText = $dropdownToggle.text().trim();
-                const $dropdownMenuLinks = $this.find(".dropdown-menu a");
-                const dNoneClass = "d-none";
-                $dropdownMenuLinks.each(function() {
-                    const $this = $(this);
-                    if ($this.text() == dropdownToggleText) {
-                        $this.addClass(dNoneClass);
+        function newArrivalAddToCart(productId, productImageId = null, feature = null) {
+            $.ajax({
+                url: "{{ route('front.addToCart') }}",
+                type: "POST",
+                data: {
+                    id: productId,
+                    image_id: productImageId,
+                    feature: feature
+                },
+                dataType: 'json',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    console.log(response);
+                    if (response.status == true) {
+                        window.location.href = "{{ route('front.cart') }}";
                     } else {
-                        $this.removeClass(dNoneClass);
+                        toastr.success(response.message);
+                        console.log("Error", response.message); 
                     }
-                });
+                }
+            })
+        }
+     
+        $('.add').click(function() {
+            var qtyElement = $(this).parent().prev();
+            var qtyValue = parseInt(qtyElement.val());
+
+            if ($('div').hasClass('alert-danger')) {
+                return;
             }
 
-            function clickHandler(e) {
-                e.preventDefault();
-                const $this = $(this);
-                const index = $this.index();
-                const text = $this.text();
-                $this.closest(".dropdown").find(".dropdown-toggle").text(`${text}`);
-                $this
-                    .closest($tabsToDropdown)
-                    .find(`.nav-pills li:eq(${index}) a`)
-                    .tab("show");
+            if (qtyValue < 10) {
+                qtyElement.val(qtyValue + 1);
 
-                // Define the content for each tab
-                const content = {
-                    'Company': `<p>Additional content for Company.</p>`,
-                    'Product': `<p>Additional content for Product.</p>`,
-                    'News': `<p>Additional content for News.</p>`,
-                    'Contact': `<p>Additional content for Contact.</p>`
-                };
+                var rowId = $(this).data('id');
+                var newQty = qtyElement.val();
 
-                // Append the content to the placeholder
-                $('#tab-content-placeholder').html(content[text]);
+                // Show loader and disable buttons
+                $(".loader").show();
+                $('.add').prop('disabled', true);
+
+                // updateCart(rowId, newQty, $(this));
             }
+        });
 
-            function shownTabsHandler(e) {
-                console.log("shownTabsHandler", e);
-                // works also
-                //const $this = $(this);
-                const $this = $(e.target);
-                const index = $this.parent().index();
-                const $parent = $this.closest($tabsToDropdown);
-                const $targetDropdownLink = $parent.find(".dropdown-menu a").eq(index);
-                const targetDropdownLinkText = $targetDropdownLink.text();
-                $parent.find(".dropdown-toggle").text(targetDropdownLinkText);
+        $('.sub').click(function() {
+            var qtyElement = $(this).parent().next();
+            var qtyValue = parseInt(qtyElement.val());
+
+            if (qtyValue > 1) {
+                qtyElement.val(qtyValue - 1);
+
+                var rowId = $(this).data('id');
+                var newQty = qtyElement.val();
+
+                // Show loader and disable buttons
+                $(".loader").show();
+                $('.sub').prop('disabled', true);
+
+                // updateCart(rowId, newQty, $(this));
             }
+        });
 
-            $tabsToDropdown.each(function() {
-                const $this = $(this);
-                const $pills = $this.find('a[data-toggle="pill"]');
 
-                generateDropdownMarkup($this);
-
-                const $dropdown = $this.find(".dropdown");
-                const $dropdownLinks = $this.find(".dropdown-menu a");
-
-                $dropdown.on("show.bs.dropdown", showDropdownHandler);
-                $dropdownLinks.on("click", clickHandler);
-                $pills.on("shown.bs.tab", shownTabsHandler);
-
-                // Attach click handler to append content dynamically
-                $pills.on("click", clickHandler);
-            });
-        })
     </script>
-
-    <script></script>
 @endsection

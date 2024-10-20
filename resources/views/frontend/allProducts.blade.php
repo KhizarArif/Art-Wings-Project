@@ -9,7 +9,7 @@
                     <div class="col-md-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
                         <div class="card border border-2 product_container">
                             <div class="img-container position-relative">
-                                <a href="javascript::void(0)">
+                                <a href="javascript:void(0)">
                                     <img src="{{ asset('uploads/product/large/' . $product->productImages->first()->image) }}"
                                         class="card-img-top shop-item-image" alt="{{ $product->title }}">
                                 </a>

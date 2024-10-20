@@ -74,11 +74,11 @@
                     @foreach ($contentCart as $content)
                         <tr class="product_body">
                             <td class="product_img_container">
-                                @if ($content->options->newArrivalImages && $content->options->newArrivalImages->image == null)
+                                @if ($content->options->newArrivalImages && $content->options->newArrivalImages->image != null)
                                     <img class="product_img"
                                         src="{{ asset('uploads/NewArrival/small/' . $content->options->newArrivalImages->image) }}"
                                         alt="">
-                                @else
+                                @elseif ($content->options->productImage && $content->options->productImage->image != null)
                                     <img class="product_img"
                                         src="{{ asset('uploads/product/small/' . $content->options->productImage->image) }}"
                                         alt="">
@@ -90,8 +90,7 @@
                                         onclick="deleteToCart('{{ $content->rowId }}')">Remove</a>
                                 </div>
                             </td>
-                            <td> Rs.{{ $content->price }} </td>
-                            <input type="hidden" name="size" id="size" value="{{ $content->options->size }}">
+                            <td> Rs.{{ $content->price }} </td> 
                             <td style="width: 20%;">
                                 <div class="input-group quantity" style="width: 100px;">
                                     <div class="input-group-btn">

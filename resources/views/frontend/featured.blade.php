@@ -22,16 +22,21 @@
                                 </p>
 
                                 <div class="mt-4 d-flex align-items-end justify-content-between">
-                                    <div class="col-md-4 p-0">
-                                        <div class="input-group quantity border border-1 justify-content-between rounded">
-                                            <button class="btn btn-outline-none border border-none  btn-bold"
-                                                type="button" id="decrement-btn"><i class="fa fa-minus"
-                                                    aria-hidden="true"></i></button>
-                                            <input type="text" class="quantity_value" id="quantity-input"
-                                                name="quantity" value="1">
-                                            <button class="btn btn-outline-none border border-none  btn-bold "
-                                                type="button" id="increment-btn"><i class="fa fa-plus"
-                                                    aria-hidden="true"></i>
+                                    <div class="input-group quantity" style="width: 100px;">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-dark btn-minus p-2 pt-2 pb-2 sub rounded"
+                                                {{-- data-id="{{ $content->rowId }}" --}}
+                                                >
+                                                <i class="fa fa-minus"></i>
+                                            </button>
+                                        </div>
+                                        <input type="text" class="form-control  border-0 text-center" name="qty"
+                                            value="1">
+                                        <div class="input-group-btn">
+                                            <button class="btn btn-sm btn-dark btn-plus p-2 pt-2 pb-2 add rounded"
+                                                {{-- data-id="{{ $content->rowId }}" --}}
+                                                >
+                                                <i class="fa fa-plus"></i>
                                             </button>
                                         </div>
                                     </div>

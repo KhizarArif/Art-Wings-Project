@@ -25,11 +25,11 @@
                     @foreach ($subCategories as $subcategory)
                         <div class="tab-pane fade show active" id="pills-{{ $subcategory->id }}" role="tabpanel"
                             aria-labelledby="pills-{{ $subcategory->id }}-tab">
-                            <div class="container mb-3">
+                            <div class="container-full mb-3">
                                 <div class="row">
                                     @foreach ($subcategory->subCategoryImages as $subImage)
                                         <div
-                                            class="col-md-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
+                                            class="col-md-4 col-lg-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
                                             <div class="card border border-2">
                                                 <div class="img-container position-relative">
                                                     <a href="javascript::void(0)">

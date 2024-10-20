@@ -78,18 +78,25 @@
                 <div class="border p-3 mb-3">
                     @if (!empty($checkoutContent))
                         @foreach ($checkoutContent as $content)
-                            <div class="product_info"> 
+                            <div class="product_info">
                                 <input type="hidden" class="form-control" name="qty" id="qty"
                                     value="{{ isset($content) ? $content->qty : 0 }}">
 
                                 <div class="product_thumbnail_container">
-                                    <img class="product_thumbnail"
-                                        src="{{ asset('uploads/product/small/' . $content->options->productImage->image) }}"
-                                        alt="Product Thumbnail">
+                                    @if ($content->options->newArrivalImages && $content->options->newArrivalImages->image != null)
+                                        <img class="product_thumbnail"
+                                            src="{{ asset('uploads/NewArrival/small/' . $content->options->newArrivalImages->image) }}"
+                                            alt="Product Thumbnail">
+                                    @elseif ($content->options->productImage && $content->options->productImage->image != null)
+                                        <img class="product_thumbnail"
+                                            src="{{ asset('uploads/product/small/' . $content->options->productImage->image) }}"
+                                            alt="Product Thumbnail">
+                                    @endif
+
                                     <div class="product_qty_badge"> {{ $content->qty }} </div>
                                 </div>
                                 <div class="description ">
-                                    <p class="product_name">{{ $content->name }}</p> 
+                                    <p class="product_name">{{ $content->name }}</p>
                                     <p class="product_price">Rs. {{ $content->price }}</p>
                                 </div>
 
@@ -123,8 +130,8 @@
 @section('customJs')
     <script>
         $("#checkout_form").submit(function(e) {
-            e.preventDefault(); 
-            var formData = $(this).serializeArray(); 
+            e.preventDefault();
+            var formData = $(this).serializeArray();
             $('input[name="qty"]').each(function() {
                 formData.push({
                     name: 'qty',
@@ -146,7 +153,7 @@
                         console.log("Successfull", response);
                         var encryptedOrderId = response.orderId;
                         console.log(encryptedOrderId);
-                        window.location.href = "{{ route('front.thankyou', '')  }}/"+encryptedOrderId;
+                        window.location.href = "{{ route('front.thankyou', '') }}/" + encryptedOrderId;
                     }
                 }
             })

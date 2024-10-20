@@ -56,10 +56,9 @@
 {{-- Footer END --}}
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js">
-    < /scrip> <
-    script src = "https://kit.fontawesome.com/a076d05399.js" >
-</script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 <script>
     const navbar = document.getElementById("main-navbar")
 
@@ -71,9 +70,9 @@
         }
     })
 
- 
 
-    function addToCart(productId, productImageId = null, feature= null) {
+
+    function addToCart(productId, productImageId = null, feature = null) {
         console.log("productId: ", productId, "productImageId: ", productImageId);
         $.ajax({
             url: "{{ route('front.addToCart') }}",
@@ -93,7 +92,7 @@
                     window.location.href = "{{ route('front.cart') }}";
                 } else {
                     console.log("Error");
-                    toast.error(response.message);
+                    toastr.error(response.message);
                 }
             }
         })

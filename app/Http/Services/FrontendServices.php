@@ -33,7 +33,7 @@ class FrontendServices
     public function cart()
     {
 
-        $contentCart = Cart::content();
+        $contentCart = Cart::content(); 
         return view('frontend.addToCart', compact('contentCart'));
     }
 
@@ -212,7 +212,7 @@ class FrontendServices
 
     public function checkouts()
     {
-        $checkoutContent = Cart::content();
+        $checkoutContent = Cart::content(); 
         $allCities = City::all();
         return view('frontend.checkout', compact('checkoutContent', 'allCities'));
     }

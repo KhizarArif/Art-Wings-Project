@@ -20,6 +20,11 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('frontend_assets/css/styles.css') }}">
+
+    {{-- Toaster --}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">
+
+
     <title>Material Design for Bootstrap - Laravel</title>
 
     <!-- Font Awesome -->
@@ -93,7 +98,7 @@
             <!-- Container wrapper -->
             <div class="container-fluid">
                 <!-- Toggle button -->
-                <button data-mdb-collapse-init class="navbar-toggler" type="button" data-mdb-toggle="collapse"
+                <button data-mdb-collapse-init class="navbar-toggler bg-white" type="button" data-mdb-toggle="collapse"
                     data-mdb-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
                     <i class="fas fa-bars"></i>
@@ -138,25 +143,32 @@
                             <div class="col-md-2" style="margin: auto;">
                                 <ul class="social_media_container ">
                                     <li class="nav-item">
-                                        <a class="nav-link pe-2" href="#!">
-                                            <i class="fab fa-youtube"></i>
+                                        <a class="nav-link pe-2" href="{{ route('front.cart') }}" title="Add to cart">
+                                            <i class="fas fa-shopping-cart"></i>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-2" href="#!">
-                                            <i class="fab fa-facebook-f"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link px-2" href="#!">
-                                            <i class="fab fa-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link ps-2" href="#!">
-                                            <i class="fab fa-instagram"></i>
-                                        </a>
-                                    </li>
+                                    <div class="d-flex">
+                                        <li class="nav-item">
+                                            <a class="nav-link pe-2" href="#!">
+                                                <i class="fab fa-youtube"></i>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link px-2" href="#!">
+                                                <i class="fab fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link px-2" href="#!">
+                                                <i class="fab fa-twitter"></i>
+                                            </a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link ps-2" href="#!">
+                                                <i class="fab fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                    </div>
                                 </ul>
                             </div>
                             {{-- Social Container End  --}}
