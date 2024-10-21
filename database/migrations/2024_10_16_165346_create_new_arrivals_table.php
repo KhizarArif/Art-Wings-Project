@@ -20,7 +20,7 @@ return new class extends Migration
             $table->double('price', 10, 2);
             $table->double('original_price', 10, 2);
             $table->integer('qty')->nullable();
-            $table->string('status')->default("active");
+            $table->enum('status', ['active', 'inactive'])->default('inactive'); 
             $table->timestamps();
         });
     }

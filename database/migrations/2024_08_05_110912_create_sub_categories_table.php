@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('slug'); 
             $table->enum('showHome', ['yes', 'no'])->default('no');
-            $table->string('status')->default('active');
+            $table->enum('status', ['active', 'inactive'])->default('inactive'); 
             $table->timestamps();
         });
     }
