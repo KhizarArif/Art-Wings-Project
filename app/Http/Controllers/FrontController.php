@@ -71,4 +71,13 @@ class FrontController extends Controller
     {
         return $this->frontendServices->subProducts($subcategorySlug);
     }
+
+    public function filterCategories(Request $request)
+    {
+        return $this->frontendServices->filterCategories($request);
+    }
+    public function getInitialCategory()
+    {
+        return $this->frontendServices->getInitialCategory();
+    }
 }

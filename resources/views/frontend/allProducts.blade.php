@@ -2,12 +2,12 @@
 
 @section('content')
 
-    <div class="container">
+    <div class="container m-5">
         <div class="row">
             @if ($products != null)
                 @foreach ($products as $product)
                     <div class="col-md-3 col-sm-6 col-xs-12 filter-item all new d-flex flex-column justify-content-between">
-                        <div class="card border border-2 product_container">
+                        <div class="card border border-2 all_product_container">
                             <div class="img-container position-relative">
                                 <a href="javascript:void(0)">
                                     <img src="{{ asset('uploads/product/large/' . $product->productImages->first()->image) }}"

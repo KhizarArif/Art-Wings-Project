@@ -60,17 +60,17 @@
                 <a href="#">Your Shopping Cart</a>
             </nav>
         </header>
-        <table class="cartContainer">
-            <thead>
-                <tr class="tableCartHeader">
-                    <th style="width: 45%;">Product</th>
-                    <th>Price</th>
-                    <th>Quantity</th>
-                    <th>Total</th>
-                </tr>
-            </thead>
-            <tbody>
-                @if (!empty($contentCart))
+        @if ($contentCart != null && count($contentCart) > 0)
+            <table class="cartContainer">
+                <thead>
+                    <tr class="tableCartHeader">
+                        <th style="width: 45%;">Product</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
                     @foreach ($contentCart as $content)
                         <tr class="product_body">
                             <td class="product_img_container">
@@ -90,7 +90,7 @@
                                         onclick="deleteToCart('{{ $content->rowId }}')">Remove</a>
                                 </div>
                             </td>
-                            <td> Rs.{{ $content->price }} </td> 
+                            <td> Rs.{{ $content->price }} </td>
                             <td style="width: 20%;">
                                 <div class="input-group quantity" style="width: 100px;">
                                     <div class="input-group-btn">
@@ -113,21 +113,22 @@
                             <td> <b> Rs.{{ $content->price * $content->qty }} </b> </td>
                         </tr>
                     @endforeach
-                @endif
 
-            </tbody>
-        </table>
-        <div class="cart-summary">
-            <div class="checkout_container">
-                <div class="subtotal">
-                    <p>Subtotal</p>
-                    <p>Rs. {{ Cart::subtotal() }}</p>
+
+                </tbody>
+            </table>
+            <div class="cart-summary">
+                <div class="checkout_container">
+                    <div class="subtotal">
+                        <p>Subtotal</p>
+                        <p>Rs. {{ Cart::subtotal() }}</p>
+                    </div>
+                    <p class="tax-shipping">Taxes and shipping calculated at checkout</p>
+                    {{-- <button class="checkout-btn">CHECK OUT</button> --}}
+                    <a href="{{ route('front.checkouts') }}"> <button class="checkout-btn"> CHECK OUT </button> </a>
                 </div>
-                <p class="tax-shipping">Taxes and shipping calculated at checkout</p>
-                {{-- <button class="checkout-btn">CHECK OUT</button> --}}
-                <a href="{{ route('front.checkouts') }}"> <button class="checkout-btn"> CHECK OUT </button> </a>
             </div>
-        </div>
+        @endif
     </div>
     </div>
 

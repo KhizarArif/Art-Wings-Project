@@ -46,7 +46,11 @@ Route::controller(FrontController::class)->group(function () {
     Route::post('update_cart', 'updateCart')->name('front.updateCart');
     Route::post('get_shipping_amount', 'getShippingAmount')->name('shipping.getShippingAmount');
     Route::post('process_checkout', 'processCheckout')->name('front.processCheckout');
+    Route::post('filter_categories', 'filterCategories')->name('front.filterCategories');
     Route::delete('delete_cart', 'deleteToCart')->name('front.deleteToCart');
+
+    // Get Initial Category When Home Page is Loaded
+    Route::get('get_initial_category', 'getInitialCategory')->name('front.getInitialCategory');
 });
 
 

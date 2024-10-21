@@ -1,5 +1,5 @@
 {{-- Footer Start --}}
-<footer class="bg-dark text-light pt-4">
+<footer class="footer">
     <div class="container">
         <div class="row">
             <!-- About Us Column -->
