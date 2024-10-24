@@ -20,6 +20,7 @@
     <!-- MDB -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.3.2/mdb.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="{{ asset('frontend_assets/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('frontend_assets/css/imageGallary.css') }}">
 
     {{-- Toaster --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet">

@@ -60,6 +60,8 @@
 
     @include('frontend.featured')
 
+    @include('frontend.imageGallary')
+
 
 @endsection
 

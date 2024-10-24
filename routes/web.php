@@ -37,9 +37,9 @@ Route::get('/', function () {
 
 // ============================ Front Routes ===============================
 Route::controller(FrontController::class)->group(function () {
-    Route::get('/', 'index')->name('home'); 
+    Route::get('/', 'index')->name('home');
     Route::get('/cart', 'cart')->name('front.cart');
-    Route::get('/all_products/{subcategorySlug?}', 'subProducts')->name('frontend.subProducts'); 
+    Route::get('/all_products/{subcategorySlug?}', 'subProducts')->name('frontend.subProducts');
     Route::get('checkouts', 'checkouts')->name('front.checkouts');
     Route::get('thankyou/{id}', 'thankyou')->name('front.thankyou');
     Route::post('add_to_cart', 'addToCart')->name('front.addToCart');
@@ -48,6 +48,10 @@ Route::controller(FrontController::class)->group(function () {
     Route::post('process_checkout', 'processCheckout')->name('front.processCheckout');
     Route::post('filter_categories', 'filterCategories')->name('front.filterCategories');
     Route::delete('delete_cart', 'deleteToCart')->name('front.deleteToCart');
+
+    Route::get('image_gallery', function () {
+        return view('frontend.imageGallary');
+    });
 
     // Get Initial Category When Home Page is Loaded
     Route::get('get_initial_category', 'getInitialCategory')->name('front.getInitialCategory');
@@ -126,7 +130,6 @@ Route::group(["prefix" => "dashboard"], function () {
             // Update Product Controller Image
             Route::post('new_arrival_image/update', 'updateProductImage')->name('new_arrivals.updateImage');
             Route::delete('new_arrival_image', 'deleteProductImage')->name('new_arrivals.deleteImage');
-
         });
 
         // Order Details 
